@@ -1,0 +1,37 @@
+[gd_resource type="BehaviorTree" load_steps=10 format=3 uid="uid://b6g561q8tfe27"]
+
+[ext_resource type="Script" path="res://ai/tasks/navigation/GoToPosition.gd" id="1_cifw5"]
+
+[sub_resource type="BBVariant" id="BBVariant_088m3"]
+type = 9
+saved_value = Vector3(2, 3, 0)
+resource_name = "(2, 3, 0)"
+
+[sub_resource type="BTSetVar" id="BTSetVar_mhqtl"]
+variable = &"position"
+value = SubResource("BBVariant_088m3")
+
+[sub_resource type="BBNode" id="BBNode_uw4mf"]
+saved_value = NodePath(".")
+resource_name = "."
+
+[sub_resource type="BTCallMethod" id="BTCallMethod_aq4vo"]
+node = SubResource("BBNode_uw4mf")
+
+[sub_resource type="BTSetAgentProperty" id="BTSetAgentProperty_me56l"]
+children = [SubResource("BTCallMethod_aq4vo")]
+
+[sub_resource type="BBVector3" id="BBVector3_lhcyc"]
+value_source = 1
+variable = &"position"
+resource_name = "$position"
+
+[sub_resource type="BTAction" id="BTAction_im4bw"]
+script = ExtResource("1_cifw5")
+position = SubResource("BBVector3_lhcyc")
+
+[sub_resource type="BTSequence" id="BTSequence_7344g"]
+children = [SubResource("BTSetVar_mhqtl"), SubResource("BTSetAgentProperty_me56l"), SubResource("BTAction_im4bw")]
+
+[resource]
+root_task = SubResource("BTSequence_7344g")
