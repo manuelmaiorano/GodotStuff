@@ -6,17 +6,54 @@ const STEER_LIMIT = 0.4
 const BRAKE_STRENGTH = 2.0
 
 @export var engine_force_value := 40.0
+@export var controlled_by_player = false
+@onready var camera_3d: Camera3D = $CameraBase/Camera3D
+@export var path_to_follow : PathFollow3D
 
 var previous_speed := linear_velocity.length()
 var _steer_target := 0.0
 
 #@onready var desired_engine_pitch: float = $EngineSound.pitch_scale
+func _ready() -> void:
+	camera_3d.current = false
+	camera_3d.set_physics_process(false)
+	if controlled_by_player:
+		camera_3d.current = true
+		camera_3d.set_physics_process(true)
 
 func _physics_process(delta: float):
-	var fwd_mps := (linear_velocity * transform.basis).x
+	var acceleration = 0.0
+	var brake = 0.0
+	var is_acceleratig = false
+	var is_braking = false
+	if controlled_by_player:
+		_steer_target = Input.get_axis(&"move_right", &"move_left")
+		_steer_target *= STEER_LIMIT
+		is_acceleratig = Input.is_action_pressed(&"move_forward")
+		is_braking =  Input.is_action_pressed(&"move_back")
+		acceleration = Input.get_action_strength(&"move_forward")
+		brake = Input.get_action_strength(&"move_back")
+		
+	else:
+		var look_ahead_distance = path_to_follow.global_position.distance_to(global_position)
+		var L = 2.0
+		var target_velocity = path_to_follow.velocitykmh
+		
+		var _acceleration = 0.05 * (target_velocity - linear_velocity.length())
+		acceleration = _acceleration
+		brake = _acceleration
+		is_acceleratig = _acceleration > 0
+		is_braking = _acceleration < 0
+		
+		var diff = path_to_follow.global_position - global_position
+		var alpha = -diff.signed_angle_to(transform.basis.z, Vector3.UP)
+		_steer_target = atan(2*L*sin(alpha)/look_ahead_distance)
+		if look_ahead_distance < 0.3:
+			_steer_target = 0
+		_steer_target = clampf(_steer_target, -STEER_LIMIT, STEER_LIMIT)
 
-	_steer_target = Input.get_axis(&"move_right", &"move_left")
-	_steer_target *= STEER_LIMIT
+	
+	var fwd_mps := (linear_velocity * transform.basis).x
 
 	# Engine sound simulation (not realistic, as this car script has no notion of gear or engine RPM).
 	#desired_engine_pitch = 0.05 + linear_velocity.length() / (engine_force_value * 0.5)
@@ -32,7 +69,7 @@ func _physics_process(delta: float):
 			Input.start_joy_vibration(joypad, 0.0, 0.5, 0.1)
 
 	# Automatically accelerate when using touch controls (reversing overrides acceleration).
-	if DisplayServer.is_touchscreen_available() or Input.is_action_pressed(&"move_forward"):
+	if DisplayServer.is_touchscreen_available() or is_acceleratig:
 		# Increase engine force at low speeds to make the initial acceleration faster.
 		var speed := linear_velocity.length()
 		if speed < 5.0 and not is_zero_approx(speed):
@@ -42,11 +79,11 @@ func _physics_process(delta: float):
 
 		if not DisplayServer.is_touchscreen_available():
 			# Apply analog throttle factor for more subtle acceleration if not fully holding down the trigger.
-			engine_force *= Input.get_action_strength(&"move_forward")
+			engine_force *= acceleration
 	else:
 		engine_force = 0.0
 
-	if Input.is_action_pressed(&"move_back"):
+	if is_braking:
 		# Increase engine force at low speeds to make the initial reversing faster.
 		var speed := linear_velocity.length()
 		if speed < 5.0 and not is_zero_approx(speed):
@@ -55,7 +92,7 @@ func _physics_process(delta: float):
 			engine_force = -engine_force_value * BRAKE_STRENGTH
 
 		# Apply analog brake factor for more subtle braking if not fully holding down the trigger.
-		engine_force *= Input.get_action_strength(&"move_back")
+		engine_force *= brake
 
 	steering = move_toward(steering, _steer_target, STEER_SPEED * delta)
 

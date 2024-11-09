@@ -1,0 +1,727 @@
+[gd_scene load_steps=9 format=3 uid="uid://chaugvwd6psir"]
+
+[ext_resource type="Script" path="res://script/test/rts_cam.gd" id="1_jlem7"]
+[ext_resource type="PackedScene" uid="uid://duq166abtruiw" path="res://dominopiece.tscn" id="1_nagb8"]
+[ext_resource type="Script" path="res://script/test/instanciate_along_path.gd" id="2_x7vdn"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_nri6k"]
+sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
+ground_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
+
+[sub_resource type="Sky" id="Sky_iu7d0"]
+sky_material = SubResource("ProceduralSkyMaterial_nri6k")
+
+[sub_resource type="Environment" id="Environment_dy88m"]
+background_mode = 2
+sky = SubResource("Sky_iu7d0")
+tonemap_mode = 2
+glow_enabled = true
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_nmp2i"]
+albedo_color = Color(0.3213, 0.51, 0.36533, 1)
+
+[sub_resource type="Curve3D" id="Curve3D_kd3pi"]
+_data = {
+"points": PackedVector3Array(0, 0, 0, 0, 0, 0, 2.79702, 0, -7.17172, 2.28055, 0, -2.28055, -2.28055, 0, 2.28055, 2.46012, 0, 2.10598, 1.78816, 0, 1.50309, -1.78816, 0, -1.50309, -7.15448, 0, 2.18373, -1.52901, 0, 1.26985, 1.52901, 0, -1.26985, -7.41363, 0, -7.22355, -0.855207, 0, -0.725629, 0.855207, 0, 0.725629, 0.905198, 0, -7.27538, 1.19211, 0, -0.855207, -1.19211, 0, 0.855207, 0.87928, 0, 0.395569, 0.932953, 0, 0.777461, -0.932953, 0, -0.777461, -5.18491, 0, 0.473315, -1.37351, 0, 1.03661, 1.37351, 0, -1.03661, -5.59956, 0, -5.64271, -1.11436, 0, -0.881122, 1.11436, 0, 0.881122, -0.183249, 0, -5.72046, 1.03661, 0, -0.984783, -1.03661, 0, 0.984783, -0.364656, 0, -1.28893, 1.0107, 0, 0.984784, -1.0107, 0, -0.984784, -3.65591, 0, -1.54808, 0, 0, 0, 0, 0, 0, -3.91506, 0, -4.42469),
+"tilts": PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
+}
+point_count = 12
+
+[node name="Node3D" type="Node3D"]
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(0.925831, -0.226547, 0.302512, 1.49012e-08, 0.800428, 0.599429, -0.377938, -0.55497, 0.741061, 1.50218, 2.99418, 3.67987)
+script = ExtResource("1_jlem7")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_dy88m")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.866023, -0.433016, 0.250001, 0, 0.499998, 0.866027, -0.500003, 0.749999, -0.43301, 0, 0, 0)
+shadow_enabled = true
+
+[node name="spawn" type="Node3D" parent="."]
+
+[node name="item_0" type="Node3D" parent="spawn"]
+transform = Transform3D(-0.965724, 0, -0.259573, 0, 1, 0, 0.259573, 0, -0.965724, 2.79702, 0, -7.17172)
+
+[node name="dominopiece" parent="spawn/item_0" instance=ExtResource("1_nagb8")]
+transform = Transform3D(1, 0, 0, 0, 0.965926, 0.258819, 0, -0.258819, 0.965926, 0.05, 0.562902, 0)
+
+[node name="item_1" type="Node3D" parent="spawn"]
+transform = Transform3D(-0.973299, 0, -0.22954, 0, 1, 0, 0.22954, 0, -0.973299, 2.91585, 0, -6.70392)
+
+[node name="dominopiece" parent="spawn/item_1" instance=ExtResource("1_nagb8")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.05, 0.562902, 0)
+
+[node name="item_2" type="Node3D" parent="spawn"]
+transform = Transform3D(-0.978792, 0, -0.204856, 0, 1, 0, 0.204856, 0, -0.978792, 3.06508, 0, -6.04278)
+
+[node name="dominopiece" parent="spawn/item_2" instance=ExtResource("1_nagb8")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.05, 0.562902, 0)
+
+[node name="item_3" type="Node3D" parent="spawn"]
+transform = Transform3D(-0.983028, 0, -0.183454, 0, 1, 0, 0.183454, 0, -0.983028, 3.17822, 0, -5.47925)
+
+[node name="dominopiece" parent="spawn/item_3" instance=ExtResource("1_nagb8")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.05, 0.562902, 0)
+
+[node name="item_4" type="Node3D" parent="spawn"]
+transform = Transform3D(-0.988457, 0, -0.1515, 0, 1, 0, 0.1515, 0, -0.988457, 3.31912, 0, -4.66687)
+
+[node name="dominopiece" parent="spawn/item_4" instance=ExtResource("1_nagb8")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.05, 0.562902, 0)
+
+[node name="item_5" type="Node3D" parent="spawn"]
+transform = Transform3D(-0.993713, 0, -0.111957, 0, 1, 0, 0.111957, 0, -0.993713, 3.44297, 0, -3.76582)
+
+[node name="dominopiece" parent="spawn/item_5" instance=ExtResource("1_nagb8")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.05, 0.562902, 0)
+
+[node name="item_6" type="Node3D" parent="spawn"]
+transform = Transform3D(-0.997331, 0, -0.0730145, 0, 1, 0, 0.0730145, 0, -0.997331, 3.51791, 0, -3.00365)
+
+[node name="dominopiece" parent="spawn/item_6" instance=ExtResource("1_nagb8")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.05, 0.562902, 0)
+
+[node name="item_7" type="Node3D" parent="spawn"]
+transform = Transform3D(-0.999929, 0, -0.0118812, 0, 1, 0, 0.0118812, 0, -0.999929, 3.56659, 0, -2.02743)
+
+[node name="dominopiece" parent="spawn/item_7" instance=ExtResource("1_nagb8")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.05, 0.562902, 0)
+
+[node name="item_8" type="Node3D" parent="spawn"]
+transform = Transform3D(-0.998723, 0, 0.0505119, 0, 1, 0, -0.0505119, 0, -0.998723, 3.55853, 0, -1.24857)
+
+[node name="dominopiece" parent="spawn/item_8" instance=ExtResource("1_nagb8")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.05, 0.562902, 0)
+
+[node name="item_9" type="Node3D" parent="spawn"]
+transform = Transform3D(-0.988381, 0, 0.151998, 0, 1, 0, -0.151998, 0, -0.988381, 3.47487, 0, -0.305768)
+
+[node name="dominopiece" parent="spawn/item_9" instance=ExtResource("1_nagb8")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.05, 0.562902, 0)
+
+[node name="item_10" type="Node3D" parent="spawn"]
+transform = Transform3D(-0.957312, 0, 0.289056, 0, 1, 0, -0.289056, 0, -0.957312, 3.29298, 0, 0.571547)
+
+[node name="dominopiece" parent="spawn/item_10" instance=ExtResource("1_nagb8")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.05, 0.562902, 0)
+
+[node name="item_11" type="Node3D" parent="spawn"]
+transform = Transform3D(-0.902669, 0, 0.430336, 0, 1, 0, -0.430336, 0, -0.902669, 3.06489, 0, 1.20373)
+
+[node name="dominopiece" parent="spawn/item_11" instance=ExtResource("1_nagb8")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.05, 0.562902, 0)
+
+[node name="item_12" type="Node3D" parent="spawn"]
+transform = Transform3D(-0.767175, 0, 0.641438, 0, 1, 0, -0.641438, 0, -0.767175, 2.66173, 0, 1.87872)
+
+[node name="dominopiece" parent="spawn/item_12" instance=ExtResource("1_nagb8")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.05, 0.562902, 0)
+
+[node name="item_13" type="Node3D" parent="spawn"]
+transform = Transform3D(-0.630534, 0, 0.776161, 0, 1, 0, -0.776161, 0, -0.630534, 2.23697, 0, 2.31112)
+
+[node name="dominopiece" parent="spawn/item_13" instance=ExtResource("1_nagb8")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.05, 0.562902, 0)
+
+[node name="item_14" type="Node3D" parent="spawn"]
+transform = Transform3D(-0.479609, 0, 0.877482, 0, 1, 0, -0.877482, 0, -0.479609, 1.60381, 0, 2.75018)
+
+[node name="dominopiece" parent="spawn/item_14" instance=ExtResource("1_nagb8")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.05, 0.562902, 0)
+
+[node name="item_15" type="Node3D" parent="spawn"]
+transform = Transform3D(-0.342706, 0, 0.939443, 0, 1, 0, -0.939443, 0, -0.342706, 0.879214, 0, 3.08881)
+
+[node name="dominopiece" parent="spawn/item_15" instance=ExtResource("1_nagb8")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.05, 0.562902, 0)
+
+[node name="item_16" type="Node3D" parent="spawn"]
+transform = Transform3D(-0.246256, 0, 0.969205, 0, 1, 0, -0.969205, 0, -0.246256, 0.247192, 0, 3.29161)
+
+[node name="dominopiece" parent="spawn/item_16" instance=ExtResource("1_nagb8")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.05, 0.562902, 0)
+
+[node name="item_17" type="Node3D" parent="spawn"]
+transform = Transform3D(-0.14088, 0, 0.990027, 0, 1, 0, -0.990027, 0, -0.14088, -0.591385, 0, 3.46518)
+
+[node name="dominopiece" parent="spawn/item_17" instance=ExtResource("1_nagb8")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.05, 0.562902, 0)
+
+[node name="item_18" type="Node3D" parent="spawn"]
+transform = Transform3D(-0.0665513, 0, 0.997783, 0, 1, 0, -0.997783, 0, -0.0665513, -1.28855, 0, 3.544)
+
+[node name="dominopiece" parent="spawn/item_18" instance=ExtResource("1_nagb8")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.05, 0.562902, 0)
+
+[node name="item_19" type="Node3D" parent="spawn"]
+transform = Transform3D(0.0172653, 0, 0.999851, 0, 1, 0, -0.999851, 0, 0.0172653, -2.176, 0, 3.57269)
+
+[node name="dominopiece" parent="spawn/item_19" instance=ExtResource("1_nagb8")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.05, 0.562902, 0)
+
+[node name="item_20" type="Node3D" parent="spawn"]
+transform = Transform3D(0.0946707, 0, 0.995509, 0, 1, 0, -0.995509, 0, 0.0946707, -3.06247, 0, 3.52961)
+
+[node name="dominopiece" parent="spawn/item_20" instance=ExtResource("1_nagb8")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.05, 0.562902, 0)
+
+[node name="item_21" type="Node3D" parent="spawn"]
+transform = Transform3D(0.154602, 0, 0.987977, 0, 1, 0, -0.987977, 0, 0.154602, -3.75744, 0, 3.44765)
+
+[node name="dominopiece" parent="spawn/item_21" instance=ExtResource("1_nagb8")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.05, 0.562902, 0)
+
+[node name="item_22" type="Node3D" parent="spawn"]
+transform = Transform3D(0.230466, 0, 0.97308, 0, 1, 0, -0.97308, 0, 0.230466, -4.59151, 0, 3.29108)
+
+[node name="dominopiece" parent="spawn/item_22" instance=ExtResource("1_nagb8")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.05, 0.562902, 0)
+
+[node name="item_23" type="Node3D" parent="spawn"]
+transform = Transform3D(0.311815, 0, 0.950143, 0, 1, 0, -0.950143, 0, 0.311815, -5.36834, 0, 3.08017)
+
+[node name="dominopiece" parent="spawn/item_23" instance=ExtResource("1_nagb8")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.05, 0.562902, 0)
+
+[node name="item_24" type="Node3D" parent="spawn"]
+transform = Transform3D(0.38485, 0, 0.922979, 0, 1, 0, -0.922979, 0, 0.38485, -5.9351, 0, 2.87651)
+
+[node name="dominopiece" parent="spawn/item_24" instance=ExtResource("1_nagb8")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.05, 0.562902, 0)
+
+[node name="item_25" type="Node3D" parent="spawn"]
+transform = Transform3D(0.492759, 0, 0.870166, 0, 1, 0, -0.870166, 0, 0.492759, -6.55827, 0, 2.5835)
+
+[node name="dominopiece" parent="spawn/item_25" instance=ExtResource("1_nagb8")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.05, 0.562902, 0)
+
+[node name="item_26" type="Node3D" parent="spawn"]
+transform = Transform3D(0.598418, 0, 0.801184, 0, 1, 0, -0.801184, 0, 0.598418, -6.97605, 0, 2.32222)
+
+[node name="dominopiece" parent="spawn/item_26" instance=ExtResource("1_nagb8")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.05, 0.562902, 0)
+
+[node name="item_27" type="Node3D" parent="spawn"]
+transform = Transform3D(0.787027, 0, 0.616919, 0, 1, 0, -0.616919, 0, 0.787027, -7.39418, 0, 1.93961)
+
+[node name="dominopiece" parent="spawn/item_27" instance=ExtResource("1_nagb8")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.05, 0.562902, 0)
+
+[node name="item_28" type="Node3D" parent="spawn"]
+transform = Transform3D(0.897434, 0, 0.441149, 0, 1, 0, -0.441149, 0, 0.897434, -7.74173, 0, 1.40004)
+
+[node name="dominopiece" parent="spawn/item_28" instance=ExtResource("1_nagb8")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.05, 0.562902, 0)
+
+[node name="item_29" type="Node3D" parent="spawn"]
+transform = Transform3D(0.942705, 0, 0.333629, 0, 1, 0, -0.333629, 0, 0.942705, -7.97343, 0, 0.866241)
+
+[node name="dominopiece" parent="spawn/item_29" instance=ExtResource("1_nagb8")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.05, 0.562902, 0)
+
+[node name="item_30" type="Node3D" parent="spawn"]
+transform = Transform3D(0.973395, 0, 0.229136, 0, 1, 0, -0.229136, 0, 0.973395, -8.20578, 0, 0.0965308)
+
+[node name="dominopiece" parent="spawn/item_30" instance=ExtResource("1_nagb8")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.05, 0.562902, 0)
+
+[node name="item_31" type="Node3D" parent="spawn"]
+transform = Transform3D(0.986885, 0, 0.161422, 0, 1, 0, -0.161422, 0, 0.986885, -8.34628, 0, -0.582465)
+
+[node name="dominopiece" parent="spawn/item_31" instance=ExtResource("1_nagb8")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.05, 0.562902, 0)
+
+[node name="item_32" type="Node3D" parent="spawn"]
+transform = Transform3D(0.996063, 0, 0.0886431, 0, 1, 0, -0.0886431, 0, 0.996063, -8.46583, 0, -1.48502)
+
+[node name="dominopiece" parent="spawn/item_32" instance=ExtResource("1_nagb8")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.05, 0.562902, 0)
+
+[node name="item_33" type="Node3D" parent="spawn"]
+transform = Transform3D(0.999744, 0, 0.0226096, 0, 1, 0, -0.0226096, 0, 0.999744, -8.52374, 0, -2.41934)
+
+[node name="dominopiece" parent="spawn/item_33" instance=ExtResource("1_nagb8")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.05, 0.562902, 0)
+
+[node name="item_34" type="Node3D" parent="spawn"]
+transform = Transform3D(0.999574, 0, -0.0291916, 0, 1, 0, 0.0291916, 0, 0.999574, -8.5262, 0, -3.16949)
+
+[node name="dominopiece" parent="spawn/item_34" instance=ExtResource("1_nagb8")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.05, 0.562902, 0)
+
+[node name="item_35" type="Node3D" parent="spawn"]
+transform = Transform3D(0.995248, 0, -0.0973706, 0, 1, 0, 0.0973706, 0, 0.995248, -8.47505, 0, -4.08531)
+
+[node name="dominopiece" parent="spawn/item_35" instance=ExtResource("1_nagb8")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.05, 0.562902, 0)
+
+[node name="item_36" type="Node3D" parent="spawn"]
+transform = Transform3D(0.987313, 0, -0.158785, 0, 1, 0, 0.158785, 0, 0.987313, -8.39122, 0, -4.78174)
+
+[node name="dominopiece" parent="spawn/item_36" instance=ExtResource("1_nagb8")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.05, 0.562902, 0)
+
+[node name="item_37" type="Node3D" parent="spawn"]
+transform = Transform3D(0.96776, 0, -0.251876, 0, 1, 0, 0.251876, 0, 0.96776, -8.23341, 0, -5.58177)
+
+[node name="dominopiece" parent="spawn/item_37" instance=ExtResource("1_nagb8")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.05, 0.562902, 0)
+
+[node name="item_38" type="Node3D" parent="spawn"]
+transform = Transform3D(0.926399, 0, -0.376543, 0, 1, 0, 0.376543, 0, 0.926399, -8.01738, 0, -6.27544)
+
+[node name="dominopiece" parent="spawn/item_38" instance=ExtResource("1_nagb8")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.05, 0.562902, 0)
+
+[node name="item_39" type="Node3D" parent="spawn"]
+transform = Transform3D(0.858243, 0, -0.513243, 0, 1, 0, 0.513243, 0, 0.858243, -7.80313, 0, -6.73361)
+
+[node name="dominopiece" parent="spawn/item_39" instance=ExtResource("1_nagb8")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.05, 0.562902, 0)
+
+[node name="item_40" type="Node3D" parent="spawn"]
+transform = Transform3D(0.58988, 0, -0.807491, 0, 1, 0, 0.807491, 0, 0.58988, -7.41363, 0, -7.22355)
+
+[node name="dominopiece" parent="spawn/item_40" instance=ExtResource("1_nagb8")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.05, 0.562902, 0)
+
+[node name="item_41" type="Node3D" parent="spawn"]
+transform = Transform3D(0.370477, 0, -0.928842, 0, 1, 0, 0.928842, 0, 0.370477, -6.87525, 0, -7.53549)
+
+[node name="dominopiece" parent="spawn/item_41" instance=ExtResource("1_nagb8")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.05, 0.562902, 0)
+
+[node name="item_42" type="Node3D" parent="spawn"]
+transform = Transform3D(0.260212, 0, -0.965551, 0, 1, 0, 0.965551, 0, 0.260212, -6.41041, 0, -7.69555)
+
+[node name="dominopiece" parent="spawn/item_42" instance=ExtResource("1_nagb8")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.05, 0.562902, 0)
+
+[node name="item_43" type="Node3D" parent="spawn"]
+transform = Transform3D(0.160762, 0, -0.986993, 0, 1, 0, 0.986993, 0, 0.160762, -5.73464, 0, -7.84569)
+
+[node name="dominopiece" parent="spawn/item_43" instance=ExtResource("1_nagb8")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.05, 0.562902, 0)
+
+[node name="item_44" type="Node3D" parent="spawn"]
+transform = Transform3D(0.100877, 0, -0.994899, 0, 1, 0, 0.994899, 0, 0.100877, -5.13517, 0, -7.92857)
+
+[node name="dominopiece" parent="spawn/item_44" instance=ExtResource("1_nagb8")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.05, 0.562902, 0)
+
+[node name="item_45" type="Node3D" parent="spawn"]
+transform = Transform3D(0.041181, 0, -0.999152, 0, 1, 0, 0.999152, 0, 0.041181, -4.33507, 0, -7.98932)
+
+[node name="dominopiece" parent="spawn/item_45" instance=ExtResource("1_nagb8")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.05, 0.562902, 0)
+
+[node name="item_46" type="Node3D" parent="spawn"]
+transform = Transform3D(-0.00834257, 0, -0.999965, 0, 1, 0, 0.999965, 0, -0.00834257, -3.50388, 0, -8.00652)
+
+[node name="dominopiece" parent="spawn/item_46" instance=ExtResource("1_nagb8")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.05, 0.562902, 0)
+
+[node name="item_47" type="Node3D" parent="spawn"]
+transform = Transform3D(-0.0440084, 0, -0.999031, 0, 1, 0, 0.999031, 0, -0.0440084, -2.83479, 0, -7.99188)
+
+[node name="dominopiece" parent="spawn/item_47" instance=ExtResource("1_nagb8")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.05, 0.562902, 0)
+
+[node name="item_48" type="Node3D" parent="spawn"]
+transform = Transform3D(-0.0870996, 0, -0.9962, 0, 1, 0, 0.9962, 0, -0.0870996, -2.01604, 0, -7.94174)
+
+[node name="dominopiece" parent="spawn/item_48" instance=ExtResource("1_nagb8")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.05, 0.562902, 0)
+
+[node name="item_49" type="Node3D" parent="spawn"]
+transform = Transform3D(-0.123016, 0, -0.992405, 0, 1, 0, 0.992405, 0, -0.123016, -1.39207, 0, -7.8789)
+
+[node name="dominopiece" parent="spawn/item_49" instance=ExtResource("1_nagb8")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.05, 0.562902, 0)
+
+[node name="item_50" type="Node3D" parent="spawn"]
+transform = Transform3D(-0.174418, 0, -0.984672, 0, 1, 0, 0.984672, 0, -0.174418, -0.673688, 0, -7.77559)
+
+[node name="dominopiece" parent="spawn/item_50" instance=ExtResource("1_nagb8")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.05, 0.562902, 0)
+
+[node name="item_51" type="Node3D" parent="spawn"]
+transform = Transform3D(-0.242098, 0, -0.970252, 0, 1, 0, 0.970252, 0, -0.242098, -0.0490511, 0, -7.64887)
+
+[node name="dominopiece" parent="spawn/item_51" instance=ExtResource("1_nagb8")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.05, 0.562902, 0)
+
+[node name="item_52" type="Node3D" parent="spawn"]
+transform = Transform3D(-0.333956, 0, -0.942589, 0, 1, 0, 0.942589, 0, -0.333956, 0.364924, 0, -7.53357)
+
+[node name="dominopiece" parent="spawn/item_52" instance=ExtResource("1_nagb8")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.05, 0.562902, 0)
+
+[node name="item_53" type="Node3D" parent="spawn"]
+transform = Transform3D(-0.832348, 0, -0.554253, 0, 1, 0, 0.554253, 0, -0.832348, 0.98375, 0, -7.19196)
+
+[node name="dominopiece" parent="spawn/item_53" instance=ExtResource("1_nagb8")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.05, 0.562902, 0)
+
+[node name="item_54" type="Node3D" parent="spawn"]
+transform = Transform3D(-0.951696, 0, -0.307043, 0, 1, 0, 0.307043, 0, -0.951696, 1.23104, 0, -6.68048)
+
+[node name="dominopiece" parent="spawn/item_54" instance=ExtResource("1_nagb8")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.05, 0.562902, 0)
+
+[node name="item_55" type="Node3D" parent="spawn"]
+transform = Transform3D(-0.977831, 0, -0.209395, 0, 1, 0, 0.209395, 0, -0.977831, 1.37827, 0, -6.14004)
+
+[node name="dominopiece" parent="spawn/item_55" instance=ExtResource("1_nagb8")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.05, 0.562902, 0)
+
+[node name="item_56" type="Node3D" parent="spawn"]
+transform = Transform3D(-0.989742, 0, -0.142866, 0, 1, 0, 0.142866, 0, -0.989742, 1.49788, 0, -5.48806)
+
+[node name="dominopiece" parent="spawn/item_56" instance=ExtResource("1_nagb8")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.05, 0.562902, 0)
+
+[node name="item_57" type="Node3D" parent="spawn"]
+transform = Transform3D(-0.994956, 0, -0.100312, 0, 1, 0, 0.100312, 0, -0.994956, 1.57185, 0, -4.90654)
+
+[node name="dominopiece" parent="spawn/item_57" instance=ExtResource("1_nagb8")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.05, 0.562902, 0)
+
+[node name="item_58" type="Node3D" parent="spawn"]
+transform = Transform3D(-0.998597, 0, -0.0529479, 0, 1, 0, 0.0529479, 0, -0.998597, 1.63486, 0, -4.1302)
+
+[node name="dominopiece" parent="spawn/item_58" instance=ExtResource("1_nagb8")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.05, 0.562902, 0)
+
+[node name="item_59" type="Node3D" parent="spawn"]
+transform = Transform3D(-0.999978, 0, -0.00661431, 0, 1, 0, 0.00661431, 0, -0.999978, 1.66257, 0, -3.32723)
+
+[node name="dominopiece" parent="spawn/item_59" instance=ExtResource("1_nagb8")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.05, 0.562902, 0)
+
+[node name="item_60" type="Node3D" parent="spawn"]
+transform = Transform3D(-0.999451, 0, 0.0331219, 0, 1, 0, -0.0331219, 0, -0.999451, 1.65749, 0, -2.68605)
+
+[node name="dominopiece" parent="spawn/item_60" instance=ExtResource("1_nagb8")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.05, 0.562902, 0)
+
+[node name="item_61" type="Node3D" parent="spawn"]
+transform = Transform3D(-0.995844, 0, 0.0910715, 0, 1, 0, -0.0910715, 0, -0.995844, 1.61476, 0, -1.91156)
+
+[node name="dominopiece" parent="spawn/item_61" instance=ExtResource("1_nagb8")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.05, 0.562902, 0)
+
+[node name="item_62" type="Node3D" parent="spawn"]
+transform = Transform3D(-0.988786, 0, 0.149338, 0, 1, 0, -0.149338, 0, -0.988786, 1.54976, 0, -1.33247)
+
+[node name="dominopiece" parent="spawn/item_62" instance=ExtResource("1_nagb8")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.05, 0.562902, 0)
+
+[node name="item_63" type="Node3D" parent="spawn"]
+transform = Transform3D(-0.968507, 0, 0.248987, 0, 1, 0, -0.248987, 0, -0.968507, 1.42771, 0, -0.684713)
+
+[node name="dominopiece" parent="spawn/item_63" instance=ExtResource("1_nagb8")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.05, 0.562902, 0)
+
+[node name="item_64" type="Node3D" parent="spawn"]
+transform = Transform3D(-0.906009, 0, 0.423259, 0, 1, 0, -0.423259, 0, -0.906009, 1.25774, 0, -0.149818)
+
+[node name="dominopiece" parent="spawn/item_64" instance=ExtResource("1_nagb8")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.05, 0.562902, 0)
+
+[node name="item_65" type="Node3D" parent="spawn"]
+transform = Transform3D(-0.544551, 0, 0.838728, 0, 1, 0, -0.838728, 0, -0.544551, 0.87928, 0, 0.395569)
+
+[node name="dominopiece" parent="spawn/item_65" instance=ExtResource("1_nagb8")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.05, 0.562902, 0)
+
+[node name="item_66" type="Node3D" parent="spawn"]
+transform = Transform3D(-0.275546, 0, 0.961288, 0, 1, 0, -0.961288, 0, -0.275546, 0.141228, 0, 0.734107)
+
+[node name="dominopiece" parent="spawn/item_66" instance=ExtResource("1_nagb8")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.05, 0.562902, 0)
+
+[node name="item_67" type="Node3D" parent="spawn"]
+transform = Transform3D(-0.185154, 0, 0.98271, 0, 1, 0, -0.98271, 0, -0.185154, -0.439975, 0, 0.877838)
+
+[node name="dominopiece" parent="spawn/item_67" instance=ExtResource("1_nagb8")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.05, 0.562902, 0)
+
+[node name="item_68" type="Node3D" parent="spawn"]
+transform = Transform3D(-0.120286, 0, 0.992739, 0, 1, 0, -0.992739, 0, -0.120286, -0.978236, 0, 0.96393)
+
+[node name="dominopiece" parent="spawn/item_68" instance=ExtResource("1_nagb8")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.05, 0.562902, 0)
+
+[node name="item_69" type="Node3D" parent="spawn"]
+transform = Transform3D(-0.0644963, 0, 0.997918, 0, 1, 0, -0.997918, 0, -0.0644963, -1.54796, 0, 1.01964)
+
+[node name="dominopiece" parent="spawn/item_69" instance=ExtResource("1_nagb8")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.05, 0.562902, 0)
+
+[node name="item_70" type="Node3D" parent="spawn"]
+transform = Transform3D(-0.0230581, 0, 0.999734, 0, 1, 0, -0.999734, 0, -0.0230581, -2.01534, 0, 1.04248)
+
+[node name="dominopiece" parent="spawn/item_70" instance=ExtResource("1_nagb8")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.05, 0.562902, 0)
+
+[node name="item_71" type="Node3D" parent="spawn"]
+transform = Transform3D(0.0281818, 0, 0.999603, 0, 1, 0, -0.999603, 0, 0.0281818, -2.60023, 0, 1.04405)
+
+[node name="dominopiece" parent="spawn/item_71" instance=ExtResource("1_nagb8")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.05, 0.562902, 0)
+
+[node name="item_72" type="Node3D" parent="spawn"]
+transform = Transform3D(0.0712522, 0, 0.997458, 0, 1, 0, -0.997458, 0, 0.0712522, -3.05841, 0, 1.02387)
+
+[node name="dominopiece" parent="spawn/item_72" instance=ExtResource("1_nagb8")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.05, 0.562902, 0)
+
+[node name="item_73" type="Node3D" parent="spawn"]
+transform = Transform3D(0.131753, 0, 0.991283, 0, 1, 0, -0.991283, 0, 0.131753, -3.60512, 0, 0.97204)
+
+[node name="dominopiece" parent="spawn/item_73" instance=ExtResource("1_nagb8")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.05, 0.562902, 0)
+
+[node name="item_74" type="Node3D" parent="spawn"]
+transform = Transform3D(0.232642, 0, 0.972563, 0, 1, 0, -0.972563, 0, 0.232642, -4.20133, 0, 0.871102)
+
+[node name="dominopiece" parent="spawn/item_74" instance=ExtResource("1_nagb8")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.05, 0.562902, 0)
+
+[node name="item_75" type="Node3D" parent="spawn"]
+transform = Transform3D(0.432356, 0, 0.901703, 0, 1, 0, -0.901703, 0, 0.432356, -4.84799, 0, 0.671412)
+
+[node name="dominopiece" parent="spawn/item_75" instance=ExtResource("1_nagb8")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.05, 0.562902, 0)
+
+[node name="item_76" type="Node3D" parent="spawn"]
+transform = Transform3D(0.817084, 0, 0.576519, 0, 1, 0, -0.576519, 0, 0.817084, -5.3584, 0, 0.287896)
+
+[node name="dominopiece" parent="spawn/item_76" instance=ExtResource("1_nagb8")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.05, 0.562902, 0)
+
+[node name="item_77" type="Node3D" parent="spawn"]
+transform = Transform3D(0.932092, 0, 0.362222, 0, 1, 0, -0.362222, 0, 0.932092, -5.76348, 0, -0.471778)
+
+[node name="dominopiece" parent="spawn/item_77" instance=ExtResource("1_nagb8")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.05, 0.562902, 0)
+
+[node name="item_78" type="Node3D" parent="spawn"]
+transform = Transform3D(0.953769, 0, 0.300541, 0, 1, 0, -0.300541, 0, 0.953769, -5.90579, 0, -0.867991)
+
+[node name="dominopiece" parent="spawn/item_78" instance=ExtResource("1_nagb8")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.05, 0.562902, 0)
+
+[node name="item_79" type="Node3D" parent="spawn"]
+transform = Transform3D(0.972587, 0, 0.232537, 0, 1, 0, -0.232537, 0, 0.972587, -6.06079, 0, -1.41531)
+
+[node name="dominopiece" parent="spawn/item_79" instance=ExtResource("1_nagb8")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.05, 0.562902, 0)
+
+[node name="item_80" type="Node3D" parent="spawn"]
+transform = Transform3D(0.983539, 0, 0.180694, 0, 1, 0, -0.180694, 0, 0.983539, -6.16266, 0, -1.8827)
+
+[node name="dominopiece" parent="spawn/item_80" instance=ExtResource("1_nagb8")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.05, 0.562902, 0)
+
+[node name="item_81" type="Node3D" parent="spawn"]
+transform = Transform3D(0.993471, 0, 0.114089, 0, 1, 0, -0.114089, 0, 0.993471, -6.25716, 0, -2.48752)
+
+[node name="dominopiece" parent="spawn/item_81" instance=ExtResource("1_nagb8")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.05, 0.562902, 0)
+
+[node name="item_82" type="Node3D" parent="spawn"]
+transform = Transform3D(0.999197, 0, 0.0400699, 0, 1, 0, -0.0400699, 0, 0.999197, -6.30942, 0, -3.09708)
+
+[node name="dominopiece" parent="spawn/item_82" instance=ExtResource("1_nagb8")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.05, 0.562902, 0)
+
+[node name="item_83" type="Node3D" parent="spawn"]
+transform = Transform3D(0.999579, 0, -0.0290053, 0, 1, 0, 0.0290053, 0, 0.999579, -6.31669, 0, -3.57509)
+
+[node name="dominopiece" parent="spawn/item_83" instance=ExtResource("1_nagb8")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.05, 0.562902, 0)
+
+[node name="item_84" type="Node3D" parent="spawn"]
+transform = Transform3D(0.990834, 0, -0.135085, 0, 1, 0, 0.135085, 0, 0.990834, -6.27743, 0, -4.14424)
+
+[node name="dominopiece" parent="spawn/item_84" instance=ExtResource("1_nagb8")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.05, 0.562902, 0)
+
+[node name="item_85" type="Node3D" parent="spawn"]
+transform = Transform3D(0.970029, 0, -0.24299, 0, 1, 0, 0.24299, 0, 0.970029, -6.2035, 0, -4.56475)
+
+[node name="dominopiece" parent="spawn/item_85" instance=ExtResource("1_nagb8")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.05, 0.562902, 0)
+
+[node name="item_86" type="Node3D" parent="spawn"]
+transform = Transform3D(0.823017, 0, -0.568017, 0, 1, 0, 0.568017, 0, 0.823017, -5.92887, 0, -5.27066)
+
+[node name="dominopiece" parent="spawn/item_86" instance=ExtResource("1_nagb8")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.05, 0.562902, 0)
+
+[node name="item_87" type="Node3D" parent="spawn"]
+transform = Transform3D(0.476334, 0, -0.879264, 0, 1, 0, 0.879264, 0, 0.476334, -5.32463, 0, -5.82409)
+
+[node name="dominopiece" parent="spawn/item_87" instance=ExtResource("1_nagb8")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.05, 0.562902, 0)
+
+[node name="item_88" type="Node3D" parent="spawn"]
+transform = Transform3D(0.30462, 0, -0.952474, 0, 1, 0, 0.952474, 0, 0.30462, -4.68517, 0, -6.11032)
+
+[node name="dominopiece" parent="spawn/item_88" instance=ExtResource("1_nagb8")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.05, 0.562902, 0)
+
+[node name="item_89" type="Node3D" parent="spawn"]
+transform = Transform3D(0.132998, 0, -0.991116, 0, 1, 0, 0.991116, 0, 0.132998, -3.76876, 0, -6.32932)
+
+[node name="dominopiece" parent="spawn/item_89" instance=ExtResource("1_nagb8")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.05, 0.562902, 0)
+
+[node name="item_90" type="Node3D" parent="spawn"]
+transform = Transform3D(0.014392, 0, -0.999896, 0, 1, 0, 0.999896, 0, 0.014392, -2.99008, 0, -6.39792)
+
+[node name="dominopiece" parent="spawn/item_90" instance=ExtResource("1_nagb8")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.05, 0.562902, 0)
+
+[node name="item_91" type="Node3D" parent="spawn"]
+transform = Transform3D(-0.131736, 0, -0.991285, 0, 1, 0, 0.991285, 0, -0.131736, -2.02456, 0, -6.3564)
+
+[node name="dominopiece" parent="spawn/item_91" instance=ExtResource("1_nagb8")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.05, 0.562902, 0)
+
+[node name="item_92" type="Node3D" parent="spawn"]
+transform = Transform3D(-0.301761, 0, -0.953384, 0, 1, 0, 0.953384, 0, -0.301761, -1.1397, 0, -6.18011)
+
+[node name="dominopiece" parent="spawn/item_92" instance=ExtResource("1_nagb8")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.05, 0.562902, 0)
+
+[node name="item_93" type="Node3D" parent="spawn"]
+transform = Transform3D(-0.480126, 0, -0.877199, 0, 1, 0, 0.877199, 0, -0.480126, -0.541719, 0, -5.94684)
+
+[node name="dominopiece" parent="spawn/item_93" instance=ExtResource("1_nagb8")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.05, 0.562902, 0)
+
+[node name="item_94" type="Node3D" parent="spawn"]
+transform = Transform3D(-0.77947, 0, -0.62644, 0, 1, 0, 0.62644, 0, -0.77947, 0.00974311, 0, -5.53631)
+
+[node name="dominopiece" parent="spawn/item_94" instance=ExtResource("1_nagb8")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.05, 0.562902, 0)
+
+[node name="item_95" type="Node3D" parent="spawn"]
+transform = Transform3D(-0.947479, 0, -0.319818, 0, 1, 0, 0.319818, 0, -0.947479, 0.357114, 0, -4.93459)
+
+[node name="dominopiece" parent="spawn/item_95" instance=ExtResource("1_nagb8")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.05, 0.562902, 0)
+
+[node name="item_96" type="Node3D" parent="spawn"]
+transform = Transform3D(-0.992608, 0, -0.121366, 0, 1, 0, 0.121366, 0, -0.992608, 0.503245, 0, -4.34729)
+
+[node name="dominopiece" parent="spawn/item_96" instance=ExtResource("1_nagb8")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.05, 0.562902, 0)
+
+[node name="item_97" type="Node3D" parent="spawn"]
+transform = Transform3D(-0.996652, 0, 0.081765, 0, 1, 0, -0.081765, 0, -0.996652, 0.532661, 0, -3.54357)
+
+[node name="dominopiece" parent="spawn/item_97" instance=ExtResource("1_nagb8")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.05, 0.562902, 0)
+
+[node name="item_98" type="Node3D" parent="spawn"]
+transform = Transform3D(-0.973287, 0, 0.22959, 0, 1, 0, -0.22959, 0, -0.973287, 0.442109, 0, -2.89153)
+
+[node name="dominopiece" parent="spawn/item_98" instance=ExtResource("1_nagb8")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.05, 0.562902, 0)
+
+[node name="item_99" type="Node3D" parent="spawn"]
+transform = Transform3D(-0.906216, 0, 0.422815, 0, 1, 0, -0.422815, 0, -0.906216, 0.197773, 0, -2.12795)
+
+[node name="dominopiece" parent="spawn/item_99" instance=ExtResource("1_nagb8")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.05, 0.562902, 0)
+
+[node name="item_100" type="Node3D" parent="spawn"]
+transform = Transform3D(-0.760053, 0, 0.649861, 0, 1, 0, -0.649861, 0, -0.760053, -0.179548, 0, -1.49131)
+
+[node name="dominopiece" parent="spawn/item_100" instance=ExtResource("1_nagb8")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.05, 0.562902, 0)
+
+[node name="item_101" type="Node3D" parent="spawn"]
+transform = Transform3D(-0.597065, 0, 0.802193, 0, 1, 0, -0.802193, 0, -0.597065, -0.561343, 0, -1.11873)
+
+[node name="dominopiece" parent="spawn/item_101" instance=ExtResource("1_nagb8")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.05, 0.562902, 0)
+
+[node name="item_102" type="Node3D" parent="spawn"]
+transform = Transform3D(-0.361502, 0, 0.932371, 0, 1, 0, -0.932371, 0, -0.361502, -1.07008, 0, -0.815813)
+
+[node name="dominopiece" parent="spawn/item_102" instance=ExtResource("1_nagb8")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.05, 0.562902, 0)
+
+[node name="item_103" type="Node3D" parent="spawn"]
+transform = Transform3D(-0.138364, 0, 0.990381, 0, 1, 0, -0.990381, 0, -0.138364, -1.48926, 0, -0.693284)
+
+[node name="dominopiece" parent="spawn/item_103" instance=ExtResource("1_nagb8")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.05, 0.562902, 0)
+
+[node name="item_104" type="Node3D" parent="spawn"]
+transform = Transform3D(0.139955, 0, 0.990158, 0, 1, 0, -0.990158, 0, 0.139955, -2.02, 0, -0.679917)
+
+[node name="dominopiece" parent="spawn/item_104" instance=ExtResource("1_nagb8")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.05, 0.562902, 0)
+
+[node name="item_105" type="Node3D" parent="spawn"]
+transform = Transform3D(0.375839, 0, 0.926685, 0, 1, 0, -0.926685, 0, 0.375839, -2.54884, 0, -0.810806)
+
+[node name="dominopiece" parent="spawn/item_105" instance=ExtResource("1_nagb8")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.05, 0.562902, 0)
+
+[node name="item_106" type="Node3D" parent="spawn"]
+transform = Transform3D(0.523812, 0, 0.851834, 0, 1, 0, -0.851834, 0, 0.523812, -2.96377, 0, -1.01141)
+
+[node name="dominopiece" parent="spawn/item_106" instance=ExtResource("1_nagb8")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.05, 0.562902, 0)
+
+[node name="item_107" type="Node3D" parent="spawn"]
+transform = Transform3D(0.663809, 0, 0.747902, 0, 1, 0, -0.747902, 0, 0.663809, -3.46378, 0, -1.37206)
+
+[node name="dominopiece" parent="spawn/item_107" instance=ExtResource("1_nagb8")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.05, 0.562902, 0)
+
+[node name="item_108" type="Node3D" parent="spawn"]
+transform = Transform3D(0.828091, 0, 0.560594, 0, 1, 0, -0.560594, 0, 0.828091, -3.82538, 0, -1.74267)
+
+[node name="dominopiece" parent="spawn/item_108" instance=ExtResource("1_nagb8")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.05, 0.562902, 0)
+
+[node name="item_109" type="Node3D" parent="spawn"]
+transform = Transform3D(0.968498, 0, 0.249023, 0, 1, 0, -0.249023, 0, 0.968498, -4.09252, 0, -2.29526)
+
+[node name="dominopiece" parent="spawn/item_109" instance=ExtResource("1_nagb8")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.05, 0.562902, 0)
+
+[node name="item_110" type="Node3D" parent="spawn"]
+transform = Transform3D(0.999902, 0, 0.0139987, 0, 1, 0, -0.0139987, 0, 0.999902, -4.18206, 0, -2.89102)
+
+[node name="dominopiece" parent="spawn/item_110" instance=ExtResource("1_nagb8")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.05, 0.562902, 0)
+
+[node name="item_111" type="Node3D" parent="spawn"]
+transform = Transform3D(0.993175, 0, -0.11663, 0, 1, 0, 0.11663, 0, 0.993175, -4.1645, 0, -3.35568)
+
+[node name="dominopiece" parent="spawn/item_111" instance=ExtResource("1_nagb8")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.05, 0.562902, 0)
+
+[node name="CSGBox3D" type="CSGBox3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.74317, -0.484648, -1.95271)
+use_collision = true
+size = Vector3(15.0715, 1, 14.4204)
+material = SubResource("StandardMaterial3D_nmp2i")
+
+[node name="Path3D" type="Path3D" parent="." node_paths=PackedStringArray("spawn_node")]
+curve = SubResource("Curve3D_kd3pi")
+script = ExtResource("2_x7vdn")
+spawn_node = NodePath("../spawn")
+item_count = 112

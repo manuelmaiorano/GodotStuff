@@ -1,7 +1,10 @@
-[gd_scene load_steps=9 format=3 uid="uid://cwdocovkdthhm"]
+[gd_scene load_steps=14 format=3 uid="uid://cwdocovkdthhm"]
 
 [ext_resource type="PackedScene" uid="uid://dafj7yqjgjn6a" path="res://scenes/cars/car_1.tscn" id="1_1qegv"]
 [ext_resource type="Script" path="res://script/test/track.gd" id="1_ac6cu"]
+[ext_resource type="Script" path="res://script/test/follow_track.gd" id="2_d6cdy"]
+[ext_resource type="Texture2D" uid="uid://c2q7aolj8ufnx" path="res://assets/cars/car1/car1_Image_7.png" id="3_oi34f"]
+[ext_resource type="Texture2D" uid="uid://b8h3eq7ryv8ix" path="res://assets/cars/car1/car1_Image_8.png" id="4_3cg1d"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_f4b1h"]
 sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
@@ -23,8 +26,20 @@ _data = {
 }
 point_count = 12
 
+[sub_resource type="SphereMesh" id="SphereMesh_dveki"]
+
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_no273"]
 albedo_color = Color(0.33, 0.33, 0.33, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_bhx8e"]
+resource_name = "Body_0.001"
+albedo_color = Color(0.595, 1, 0.19, 1)
+albedo_texture = ExtResource("3_oi34f")
+metallic = 1.0
+metallic_texture = ExtResource("4_3cg1d")
+metallic_texture_channel = 2
+roughness_texture = ExtResource("4_3cg1d")
+roughness_texture_channel = 1
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_y43d3"]
 albedo_color = Color(0.2814, 0.6, 0.276, 1)
@@ -43,6 +58,16 @@ shadow_enabled = true
 transform = Transform3D(0.833019, 0, 0, 0, 0.833019, 0, 0, 0, 0.833019, 0, 0, 0)
 curve = SubResource("Curve3D_lsrb3")
 
+[node name="PathFollow3D" type="PathFollow3D" parent="Path3D"]
+transform = Transform3D(-0.851287, 0, 0.846401, 0, 1.20045, 0, -0.846401, 0, -0.851287, -30.4876, 0, -8.32337)
+h_offset = -2.965
+use_model_front = true
+script = ExtResource("2_d6cdy")
+velocitykmh = 30.0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Path3D/PathFollow3D"]
+mesh = SubResource("SphereMesh_dveki")
+
 [node name="CSGPolygon3D" type="CSGPolygon3D" parent="."]
 use_collision = true
 polygon = PackedVector2Array(0, 0, 0, 0.1, 6, 0.1, 6, 0)
@@ -59,8 +84,15 @@ path_joined = false
 material = SubResource("StandardMaterial3D_no273")
 
 [node name="car1" parent="." instance=ExtResource("1_1qegv")]
-transform = Transform3D(0.874323, 0, -0.485344, 0, 1, 0, 0.485344, 0, 0.874323, -38.7148, 0.100001, 3.2587)
-engine_force_value = 80.0
+transform = Transform3D(-0.718915, 0, 0.695098, 0, 1, 0, -0.695098, 0, -0.718915, -38.7148, 0.100001, 3.2587)
+controlled_by_player = true
+
+[node name="car2" parent="." node_paths=PackedStringArray("path_to_follow") instance=ExtResource("1_1qegv")]
+transform = Transform3D(-0.748956, 0, 0.66262, 0, 1, 0, -0.66262, 0, -0.748956, -27.2118, 0.100001, -5.71715)
+path_to_follow = NodePath("../Path3D/PathFollow3D")
+
+[node name="Coupe Body_Optics_0" parent="car2" index="0"]
+surface_material_override/2 = SubResource("StandardMaterial3D_bhx8e")
 
 [node name="CSGBox3D" type="CSGBox3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.30359, -0.427418, 70.6271)
@@ -70,5 +102,7 @@ material = SubResource("StandardMaterial3D_y43d3")
 
 [node name="CSGBox3D2" type="CSGBox3D" parent="."]
 transform = Transform3D(0.601648, -0.226727, 0.765908, 0, 0.958869, 0.283848, -0.798762, -0.170777, 0.576902, -6.93169, 1.04489, 77.7927)
-use_collision = true
+visible = false
 size = Vector3(10, 1, 17.3623)
+
+[editable path="car2"]
