@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://n2j7rtmur7ed"]
+[gd_scene load_steps=11 format=3 uid="uid://n2j7rtmur7ed"]
 
 [ext_resource type="PackedScene" uid="uid://d05u8uaegwy77" path="res://scenes/characters/ch_1/character_controller_base_ch1.tscn" id="2_e2qg7"]
 [ext_resource type="PackedScene" uid="uid://bvv4tyfa1lowa" path="res://scenes/characters/ch_test/character_controller_base.tscn" id="2_k3jlu"]
@@ -18,6 +18,16 @@ glow_enabled = true
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_8tisi"]
 albedo_color = Color(0.349367, 0.47, 0.141, 1)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_ywug8"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_jkbr7"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_wiuxp"]
+size = Vector3(0.1, 5, 0.1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_vjrcp"]
+size = Vector3(0.1, 5, 0.1)
 
 [node name="Node3D" type="Node3D"]
 
@@ -44,3 +54,27 @@ material = SubResource("StandardMaterial3D_8tisi")
 
 [node name="CharacterControllerBase2" parent="." instance=ExtResource("2_k3jlu")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 0, 0)
+
+[node name="RigidBody3D" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.56883, 5.55166, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="RigidBody3D"]
+shape = SubResource("BoxShape3D_ywug8")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="RigidBody3D"]
+mesh = SubResource("BoxMesh_jkbr7")
+
+[node name="JoltPinJoint3D" type="JoltPinJoint3D" parent="."]
+node_a = NodePath("../RigidBody3D")
+node_b = NodePath("RigidBody3D2")
+transform = Transform3D(-0.059376, 0.998236, 0, -0.998236, -0.059376, 0, 0, 0, 1, -5.85026, 5.07931, 0)
+
+[node name="RigidBody3D2" type="RigidBody3D" parent="JoltPinJoint3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0273857, -2.49554, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="JoltPinJoint3D/RigidBody3D2"]
+shape = SubResource("BoxShape3D_wiuxp")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="JoltPinJoint3D/RigidBody3D2/CollisionShape3D"]
+mesh = SubResource("BoxMesh_vjrcp")
+skeleton = NodePath("../..")

@@ -12,4 +12,5 @@ func _enter() -> void:
 	animation_tree.set("parameters/Transition/transition_request", "fall")
 	
 func _update(delta: float) -> void:
-	velocity += gravity * delta
+	player_controller.handle_gravity(delta)
+	player_controller.update_velocity()

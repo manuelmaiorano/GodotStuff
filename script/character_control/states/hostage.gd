@@ -16,24 +16,8 @@ func _setup() -> void:
 	
 func _update(delta: float) -> void:
 	
-	var root_motion = Transform3D(animation_tree.get_root_motion_rotation(), animation_tree.get_root_motion_position())
-	
-	velocity = Vector3()
-	#if motion.length() < 0.001:
-		#return
-		
-	orientation *= root_motion
-	
-	var h_velocity = orientation.origin / delta
-	
-	velocity.x = h_velocity.x
-	velocity.z = h_velocity.z
-	velocity.y = h_velocity.y
-	if velocity.length() > 10:
-		pass
-
-	orientation.origin = Vector3() # Clear accumulated root motion displacement (was applied to speed).
-	orientation = orientation.orthonormalized() # Orthonormalize orientation.
+	player_controller.do_root_motion(delta)
+	player_controller.update_velocity()
 		
 func _on_stop():
 	animation_tree["parameters/hostage/playback"].travel("release_villain")

@@ -60,6 +60,7 @@ const JUMP_SPEED = 5
 @onready var gravity = ProjectSettings.get_setting("physics/3d/default_gravity") * ProjectSettings.get_setting("physics/3d/default_gravity_vector")
 
 @onready var player_model: Node3D = %GeneralSkeleton
+var orientation = Transform3D()
 
 var airborne_time = 100
 @export var controlled_by_player = true
@@ -92,6 +93,7 @@ func initialize_hsm():
 	
 	root.add_transition(not_falling, ragdoll, "start_ragdoll")
 	root.add_transition(ragdoll, not_falling, "stop_ragdoll")
+	root.add_transition(falling, ragdoll, "fall_ragdoll")
 
 	root.add_transition(not_falling, falling, "fall")
 	root.add_transition(falling, not_falling, "land")
@@ -133,7 +135,17 @@ func _process(delta: float) -> void:
 	
 	if transform.origin.y < -40:
 		transform.origin = initial_position
-		
+			
+	# var state = root.get_leaf_state()
+	# velocity.x = state.velocity.x
+	# velocity.z = state.velocity.z
+	# var orientation = state.orientation
+	
+	# if not rag:
+	# 	update_velocity()
+	# update_orientation(orientation)
+
+func handle_gravity(delta):
 	airborne_time += delta
 	if is_on_floor():
 		if airborne_time > 0.2:
@@ -146,22 +158,31 @@ func _process(delta: float) -> void:
 		if (velocity.y <0): 
 			root.dispatch("fall")
 		velocity += gravity * delta
+
+func do_root_motion(delta, includey = false):
+	var root_motion = Transform3D(animation_tree.get_root_motion_rotation(), animation_tree.get_root_motion_position())
 	
-	var state = root.get_leaf_state()
-	velocity.x = state.velocity.x
-	velocity.z = state.velocity.z
-	var orientation = state.orientation
+	orientation *= root_motion
 	
-	if not rag:
-		update_velocity()
-	update_orientation(orientation)
+	var h_velocity = orientation.origin / delta
+	
+	velocity.x = h_velocity.x
+	velocity.z = h_velocity.z
+	if includey:
+		velocity.y = h_velocity.y
+	
+
+	orientation.origin = Vector3() # Clear accumulated root motion displacement (was applied to speed).
+	orientation = orientation.orthonormalized() # Orthonormalize orientation.
+
 	
 func update_velocity():
 	set_velocity(velocity)
 	set_up_direction(Vector3.UP)
 	move_and_slide()
 
-func update_orientation(orientation):
+func update_orientation(_orientation):
+	orientation = _orientation
 	player_model.global_transform.basis = orientation.basis
 	
 func handle_player_input(delta):

@@ -1,8 +1,5 @@
 extends LimboState
 
-
-var orientation = Transform3D()
-var velocity = Vector3()
 var player_controller
 var animation_tree: AnimationTree
 
@@ -11,6 +8,7 @@ func _enter() -> void:
 	add_event_handler("slash", _on_slash)
 
 func _update(delta: float) -> void:
+	var orientation = player_controller.orientation
 	var q_from = orientation.basis.get_rotation_quaternion()
 	var q_to
 	if player_controller.controlled_by_player:
@@ -24,24 +22,11 @@ func _update(delta: float) -> void:
 	orientation.basis = Basis(q_from.slerp(q_to, delta * player_controller.ROTATION_INTERPOLATE_SPEED))
 
 	animation_tree["parameters/blend_sword/blend_position"] = Vector2(motion.x, -motion.y)
-	
-	
-	var root_motion = Transform3D(animation_tree.get_root_motion_rotation(), animation_tree.get_root_motion_position())
-	
-	velocity = Vector3()
-	
-		
-	orientation *= root_motion
-	
-	var h_velocity = orientation.origin / delta
-	
-	velocity.x = h_velocity.x
-	velocity.z = h_velocity.z
-	velocity.y = h_velocity.y
-	
 
-	orientation.origin = Vector3() # Clear accumulated root motion displacement (was applied to speed).
-	orientation = orientation.orthonormalized() # Orthonormalize orientation.
+	player_controller.handle_gravity(delta)
+	player_controller.update_orientation(orientation)
+	player_controller.do_root_motion(delta)
+	player_controller.update_velocity()
 	
 	
 func _on_slash():

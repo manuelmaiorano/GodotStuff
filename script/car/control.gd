@@ -8,7 +8,7 @@ const BRAKE_STRENGTH = 2.0
 @export var engine_force_value := 40.0
 @export var controlled_by_player = false
 @onready var camera_3d: Camera3D = $CameraBase/Camera3D
-@export var path_to_follow : PathFollow3D
+@export var path_to_follow : Path3D
 
 var previous_speed := linear_velocity.length()
 var _steer_target := 0.0
@@ -35,21 +35,22 @@ func _physics_process(delta: float):
 		brake = Input.get_action_strength(&"move_back")
 		
 	else:
-		var look_ahead_distance = path_to_follow.global_position.distance_to(global_position)
+		var closest = path_to_follow.get_closest_waypoint(global_position)
+		var look_ahead_distance = closest.distance_to(global_position)
+		var Kp = 0.05
 		var L = 2.0
-		var target_velocity = path_to_follow.velocitykmh
+		var target_velocity = 10 *3.6
 		
-		var _acceleration = 0.05 * (target_velocity - linear_velocity.length())
+		var _acceleration = Kp * (target_velocity - linear_velocity.length())
 		acceleration = _acceleration
 		brake = _acceleration
 		is_acceleratig = _acceleration > 0
 		is_braking = _acceleration < 0
 		
-		var diff = path_to_follow.global_position - global_position
+		var diff = closest - global_position
 		var alpha = -diff.signed_angle_to(transform.basis.z, Vector3.UP)
 		_steer_target = atan(2*L*sin(alpha)/look_ahead_distance)
-		if look_ahead_distance < 0.3:
-			_steer_target = 0
+		
 		_steer_target = clampf(_steer_target, -STEER_LIMIT, STEER_LIMIT)
 
 	
