@@ -6,18 +6,12 @@ extends BTAction
 
 # Task parameters.
 @export var node_path: NodePath
-@export var visible := true
-
-
-# Called to generate a display name for the task (requires @tool).
-func _generate_name() -> String:
-	return "SetVisible  %s  node_path: \"%s\"" % [visible, node_path]
 
 
 # Called each time this task is ticked (aka executed).
 func _tick(p_delta: float) -> Status:
-	var n: CanvasItem = scene_root.get_node_or_null(node_path)
-	if is_instance_valid(n):
-		n.visible = visible
+	var node: Node3D = agent.get_tree().get_first_node_in_group(&"markers")
+	if is_instance_valid(node):
+		blackboard.set_var(&"position_to_reach", node.global_position)
 		return SUCCESS
 	return FAILURE

@@ -1,4 +1,5 @@
 extends CharacterBody3D
+class_name CharacterController
 
 const CAMERA_CONTROLLER_ROTATION_SPEED := 3.0
 const CAMERA_MOUSE_ROTATION_SPEED := 0.001
@@ -65,7 +66,11 @@ var orientation = Transform3D()
 var airborne_time = 100
 @export var controlled_by_player = true
 @onready var animation_tree = $AnimationTree
-var rag = false
+
+@onready var bt_player = $BTPlayer
+
+var q_to: Quaternion
+
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	initialize_hsm()
@@ -74,6 +79,8 @@ func _ready() -> void:
 	$DetectStuff.area_entered.connect(_on_hit)
 	
 	if not controlled_by_player:
+		var node = get_parent().get_node("PosToReach") as Node3D
+		bt_player.blackboard.set_var(&"position_to_reach", node.global_position)
 		return
 	
 	is_capturing = true
@@ -127,6 +134,8 @@ func _process(delta: float) -> void:
 		var next_path_position: Vector3 = navigation_agent.get_next_path_position()
 		var vector_to: Vector3 = global_position.direction_to(next_path_position).normalized()
 		_motion = Vector2(vector_to.x, vector_to.z)
+		if navigation_agent.is_navigation_finished():
+			_motion = Vector2.ZERO
 	
 	motion = motion.lerp(_motion, MOTION_INTERPOLATE_SPEED * delta)
 	
@@ -227,7 +236,6 @@ func handle_player_input(delta):
 		#evaulate shoot_target
 		#var ray_from = camera_camera.project_ray_origin(ch_pos)
 		#var ray_dir = camera_camera.project_ray_normal(ch_pos)
-#
 		#var col = get_parent().get_world_3d().direct_space_state.intersect_ray(PhysicsRayQueryParameters3D.create(ray_from, ray_from + ray_dir * 1000, 0b11, [self]))
 		#if col.is_empty():
 			#shoot_target = ray_from + ray_dir * 1000
@@ -260,7 +268,6 @@ func start_ragdoll():
 	%GeneralSkeleton.physical_bones_start_simulation()
 	$MainCollider.disabled = true
 	schedule_ragdoll_end()
-	rag = true
 
 func schedule_ragdoll_end():
 	await get_tree().create_timer(10.0).timeout
@@ -268,7 +275,10 @@ func schedule_ragdoll_end():
 	
 	$MainCollider.disabled = false
 	root.dispatch("stop_ragdoll")
-	rag = false
+
+
+func set_movement_target(position: Vector3):
+	navigation_agent.set_target_position(position)
 
 func shoot():
 	pass

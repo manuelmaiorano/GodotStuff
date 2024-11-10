@@ -27,13 +27,12 @@ func _ready() -> void:
 		
 	
 	
-func get_closest_waypoint(pos: Vector3):
+func get_closest_waypoint(pos: Vector3, trf: Transform3D):
 	var MIN_DIST = 8.0
 	var MAX_DIST = 5.0
 	
 	var mind = INF
 	var min_idx = 0
-	materials[min_idx].albedo_color = Color.CHOCOLATE
 
 	for idx in waypoints.size():
 		var pt = waypoints[idx]
@@ -42,12 +41,18 @@ func get_closest_waypoint(pos: Vector3):
 		if d < MIN_DIST:
 			continue
 		
+		if (pt-pos).dot(trf.basis.z)  < 0:
+			continue
+		
 		if d < mind:
-			materials[min_idx].albedo_color = Color.WHITE
 			min_idx = idx
 			mind = d
+			
+			
+	for idx in waypoints.size():
+		materials[idx].albedo_color = Color.WHITE
+		if idx ==  min_idx:
 			materials[idx].albedo_color = Color.CHOCOLATE
-		
 		
 			
 	return waypoints[min_idx]

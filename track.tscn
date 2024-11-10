@@ -76,9 +76,10 @@ material = SubResource("StandardMaterial3D_no273")
 transform = Transform3D(-0.718915, 0, 0.695098, 0, 1, 0, -0.695098, 0, -0.718915, -38.7148, 0.100001, 3.2587)
 controlled_by_player = true
 
-[node name="car2" parent="." node_paths=PackedStringArray("path_to_follow") instance=ExtResource("1_1qegv")]
+[node name="car2" parent="." node_paths=PackedStringArray("path_to_follow", "car_to_follow") instance=ExtResource("1_1qegv")]
 transform = Transform3D(-0.748956, 0, 0.66262, 0, 1, 0, -0.66262, 0, -0.748956, -27.2118, 0.100001, -5.71715)
 path_to_follow = NodePath("../Path3D")
+car_to_follow = NodePath("../car1")
 
 [node name="Coupe Body_Optics_0" parent="car2" index="0"]
 surface_material_override/2 = SubResource("StandardMaterial3D_bhx8e")

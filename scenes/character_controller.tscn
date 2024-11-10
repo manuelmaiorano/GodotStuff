@@ -1,4 +1,4 @@
-[gd_scene load_steps=104 format=3 uid="uid://bcrmwjg6aj6nv"]
+[gd_scene load_steps=118 format=3 uid="uid://bcrmwjg6aj6nv"]
 
 [ext_resource type="Script" path="res://script/character_control/character_controller.gd" id="1_k1ldo"]
 [ext_resource type="Script" path="res://script/character_control/states/standing.gd" id="2_tae63"]
@@ -13,10 +13,13 @@
 [ext_resource type="AnimationLibrary" path="res://assets/animations/rifle_anim.res" id="6_stks7"]
 [ext_resource type="AnimationLibrary" path="res://assets/animations/swim_anim.res" id="7_ioea4"]
 [ext_resource type="AnimationLibrary" path="res://assets/animations/sword_anim.res" id="8_oe518"]
-[ext_resource type="BehaviorTree" uid="uid://b6g561q8tfe27" path="res://resources/behaviour_trees/sub.tres" id="10_kd4bu"]
 [ext_resource type="Script" path="res://script/character_control/states/sword.gd" id="13_2uypf"]
 [ext_resource type="Script" path="res://script/character_control/states/ragdoll.gd" id="13_u4sou"]
 [ext_resource type="Script" path="res://script/character_control/states/hostage.gd" id="14_fj2cp"]
+[ext_resource type="Script" path="res://ai/tasks/navigation/GoToPosition.gd" id="17_isnuu"]
+[ext_resource type="Script" path="res://ai/tasks/NPCAction/SendHSMEvent.gd" id="18_wiu5b"]
+[ext_resource type="Script" path="res://ai/tasks/NPCAction/AimAt.gd" id="19_an585"]
+[ext_resource type="Script" path="res://ai/tasks/example_task.gd" id="20_sl11y"]
 
 [sub_resource type="Animation" id="Animation_ulm7r"]
 length = 0.001
@@ -383,7 +386,7 @@ fadein_time = 0.2
 fadeout_time = 0.2
 
 [sub_resource type="AnimationNodeBlendTree" id="AnimationNodeBlendTree_lgil4"]
-graph_offset = Vector2(-210.408, 590.466)
+graph_offset = Vector2(-262.628, 136.736)
 nodes/Animation/node = SubResource("AnimationNodeAnimation_klqs8")
 nodes/Animation/position = Vector2(20, -280)
 "nodes/Animation 2/node" = SubResource("AnimationNodeAnimation_8smsq")
@@ -452,27 +455,65 @@ var/position/value = Vector3(0, 0, 0)
 var/position/hint = 0
 var/position/hint_string = ""
 
-[sub_resource type="BlackboardPlan" id="BlackboardPlan_1s6fk"]
-var/pos/name = &"pos"
-var/pos/type = 9
-var/pos/value = Vector3(0, 0, 0)
-var/pos/hint = 0
-var/pos/hint_string = ""
-mapping/pos = &"position"
+[sub_resource type="BTWait" id="BTWait_fbe3y"]
 
-[sub_resource type="BTSubtree" id="BTSubtree_4wo6i"]
-subtree = ExtResource("10_kd4bu")
-blackboard_plan = SubResource("BlackboardPlan_1s6fk")
+[sub_resource type="BTAction" id="BTAction_etsom"]
+script = ExtResource("17_isnuu")
+position_var = &"position_to_reach"
 
-[sub_resource type="BTProbability" id="BTProbability_ywklb"]
-run_chance = 0.595
-children = [SubResource("BTSubtree_4wo6i")]
+[sub_resource type="BBVariant" id="BBVariant_m12eq"]
+type = 21
+saved_value = &"aim"
+resource_name = "aim"
 
-[sub_resource type="BTDynamicSequence" id="BTDynamicSequence_suryy"]
-children = [SubResource("BTProbability_ywklb")]
+[sub_resource type="BTSetVar" id="BTSetVar_l2l5d"]
+variable = &"event_to_send"
+value = SubResource("BBVariant_m12eq")
+
+[sub_resource type="BTAction" id="BTAction_uq0ft"]
+script = ExtResource("18_wiu5b")
+event_var = &"event_to_send"
+
+[sub_resource type="BBVariant" id="BBVariant_8irwy"]
+type = 9
+saved_value = Vector3(0, 0, 0)
+
+[sub_resource type="BTSetVar" id="BTSetVar_ircse"]
+variable = &"position_to_reach"
+value = SubResource("BBVariant_8irwy")
+
+[sub_resource type="BTAction" id="BTAction_g0h35"]
+script = ExtResource("19_an585")
+position_var = &"position_to_reach"
+
+[sub_resource type="BTAction" id="BTAction_qqv8e"]
+script = ExtResource("17_isnuu")
+position_var = &"position_to_reach"
+
+[sub_resource type="BTWait" id="BTWait_0x33e"]
+
+[sub_resource type="BBVariant" id="BBVariant_rkhec"]
+type = 21
+saved_value = &"stop_aim"
+resource_name = "stop_aim"
+
+[sub_resource type="BTSetVar" id="BTSetVar_7hi5m"]
+variable = &"event_to_send"
+value = SubResource("BBVariant_rkhec")
+
+[sub_resource type="BTAction" id="BTAction_iwlxn"]
+script = ExtResource("18_wiu5b")
+event_var = &"event_to_send"
+
+[sub_resource type="BTWait" id="BTWait_wt6w5"]
+duration = 10.0
+
+[sub_resource type="BTAction" id="BTAction_bhdo3"]
+script = ExtResource("20_sl11y")
+node_path = NodePath("")
 
 [sub_resource type="BTSequence" id="BTSequence_rvgew"]
-children = [SubResource("BTDynamicSequence_suryy")]
+children = [SubResource("BTWait_fbe3y"), SubResource("BTAction_etsom"), SubResource("BTSetVar_l2l5d"), SubResource("BTAction_uq0ft"), SubResource("BTSetVar_ircse"), SubResource("BTAction_g0h35"), SubResource("BTAction_qqv8e"), SubResource("BTWait_0x33e"), SubResource("BTSetVar_7hi5m"), SubResource("BTAction_iwlxn"), SubResource("BTWait_wt6w5"), SubResource("BTAction_bhdo3")]
 
 [sub_resource type="BehaviorTree" id="BehaviorTree_a3dnl"]
 blackboard_plan = SubResource("BlackboardPlan_nj71d")
