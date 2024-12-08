@@ -477,6 +477,7 @@ event_var = &"event_to_send"
 [sub_resource type="BBVariant" id="BBVariant_8irwy"]
 type = 9
 saved_value = Vector3(0, 0, 0)
+resource_name = "(0, 0, 0)"
 
 [sub_resource type="BTSetVar" id="BTSetVar_ircse"]
 variable = &"position_to_reach"

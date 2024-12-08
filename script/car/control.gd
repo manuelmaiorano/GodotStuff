@@ -1,5 +1,7 @@
 extends VehicleBody3D
+class_name CarController
 
+enum ControlMode {FOLLOW_PATH, WAYPOINT, FOLLOW_CAR}
 
 const STEER_SPEED = 1.5
 const STEER_LIMIT = 0.4
@@ -36,7 +38,7 @@ func _physics_process(delta: float):
 		brake = Input.get_action_strength(&"move_back")
 		
 	else:
-		var closest = path_to_follow.get_closest_waypoint(global_position, global_transform)
+		var closest = path_to_follow.get_closest_waypoint(global_transform)
 		#var closest = car_to_follow.global_position
 		var look_ahead_distance = closest.distance_to(global_position)
 		var Kp = 0.05

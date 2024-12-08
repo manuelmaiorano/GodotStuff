@@ -27,21 +27,22 @@ func _ready() -> void:
 		
 	
 	
-func get_closest_waypoint(pos: Vector3, trf: Transform3D):
+func get_closest_waypoint(car_global_transform: Transform3D):
 	var MIN_DIST = 8.0
 	var MAX_DIST = 5.0
 	
 	var mind = INF
 	var min_idx = 0
+	var car_global_position = car_global_transform.origin
 
 	for idx in waypoints.size():
 		var pt = waypoints[idx]
-		var d = pos.distance_to(pt)
+		var d = car_global_position.distance_to(pt)
 		
 		if d < MIN_DIST:
 			continue
 		
-		if (pt-pos).dot(trf.basis.z)  < 0:
+		if (pt-car_global_position).dot(car_global_transform.basis.z)  < 0:
 			continue
 		
 		if d < mind:
