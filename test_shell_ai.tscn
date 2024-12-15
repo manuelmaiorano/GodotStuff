@@ -38,6 +38,13 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -97.3227, 0, -67.3509)
 transform = Transform3D(-1, 6.22109e-08, -6.14211e-08, 4.02021e-08, 0.951121, 0.308818, 7.76307e-08, 0.308818, -0.951121, 0, 16, -10.6839)
 current = true
 
+[node name="shell2" parent="." instance=ExtResource("1_garp8")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 409.677, 0, 148.296)
+
+[node name="Camera3D" type="Camera3D" parent="shell2"]
+transform = Transform3D(-1, 6.22109e-08, -6.14211e-08, 4.02021e-08, 0.951121, 0.308818, 7.76307e-08, 0.308818, -0.951121, 0, 16, -10.6839)
+current = true
+
 [node name="road_grid_map" type="GridMap" parent="."]
 cell_size = Vector3(120, 2, 120)
 

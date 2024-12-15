@@ -31,16 +31,21 @@ var astar_grid: AStarGrid2D
 
 func _ready() -> void:
 	build_grid()
+	cell_to_docks[$dock_station.cell] = $dock_station
 	cell_to_docks[$dock_station2.cell] = $dock_station2
 	cell_to_intersections[$intersection.cell] = $intersection
 	schedule_shell_path()
 
 func schedule_shell_path():
 	var shell = $shell
+	var shell2 = $shell2
 	var dock1 = $dock_station
 	var dock2 = $dock_station2
 	var directions = get_directions(dock1, dock2)
-	await follow_directions(shell, directions)
+	var directions2 = get_directions(dock2, dock1)
+	follow_directions(shell, directions)
+	follow_directions(shell2, directions2)
+
 
 func build_grid():
 	astar_grid = AStarGrid2D.new()
@@ -49,6 +54,9 @@ func build_grid():
 	astar_grid.update()
 	astar_grid.set_point_solid(Vector2i(0, 0))
 	astar_grid.set_point_solid(Vector2i(0, -1))
+	astar_grid.set_point_solid(Vector2i(3, 0))
+	astar_grid.set_point_solid(Vector2i(2, 0))
+	astar_grid.set_point_solid(Vector2i(1, 0))
 
 
 static func get_closest_center(vec: Vector3):
@@ -112,6 +120,8 @@ func get_directions(from: DockStation, to: DockStation) -> Array[Direction]:
 	var point_to_reach: Vector2i
 
 	for idx in cell_path.size():
+		if idx == 0:
+			continue
 		point_to_reach = cell_path[idx]
 		if cell_to_intersections.has(cell_path[idx]):
 			var instruction = Direction.new()
