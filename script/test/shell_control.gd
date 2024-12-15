@@ -15,7 +15,7 @@ signal area_reached
 @export var my_area: Area3D
 
 # Speed for movement and rotation
-@export var move_speed: float = 5.0
+@export var move_speed: float = 3.0
 @export var rotate_speed: float = 2.0
 
 enum MODE {WAIT, FOLLOW_TARGET, FOLLOW_PATH}

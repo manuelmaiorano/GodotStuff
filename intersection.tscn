@@ -1,4 +1,4 @@
-[gd_scene load_steps=5 format=3 uid="uid://cyh5novheij4m"]
+[gd_scene load_steps=8 format=3 uid="uid://cyh5novheij4m"]
 
 [ext_resource type="Script" path="res://script/test/intersection.gd" id="1_ssrso"]
 
@@ -7,13 +7,22 @@ size = Vector2(120, 120)
 
 [sub_resource type="Curve3D" id="Curve3D_2r52l"]
 _data = {
-"points": PackedVector3Array(0, 0, 0, 0, 0, 0, 0, 0, -20, -0.423138, 0, -20.4495, 0, 0, 20, 20, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 20, 0, 0, 20, 0, 0, -20, -20, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -20),
+"points": PackedVector3Array(0, 0, 0, 0, 0, 0, 0, 0, -40, 0, 0, -40, 0, 0, 40, 40, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 40, 0, 0, 40, 0, 0, -40, -40, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -40),
 "tilts": PackedFloat32Array(0, 0, 0, 0, 0)
 }
 point_count = 5
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_1lv7p"]
-size = Vector3(10, 10, 10)
+size = Vector3(40, 10, 10)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_rkuri"]
+size = Vector3(10, 10, 40)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_ab111"]
+size = Vector3(40, 10, 10)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_b2giq"]
+size = Vector3(10, 10, 40)
 
 [node name="intersection" type="Node3D" node_paths=PackedStringArray("path")]
 script = ExtResource("1_ssrso")
@@ -32,29 +41,29 @@ mesh = SubResource("PlaneMesh_b5yy2")
 curve = SubResource("Curve3D_2r52l")
 
 [node name="out1" type="Area3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -19.9563)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -40)
 collision_layer = 2
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="out1"]
 shape = SubResource("BoxShape3D_1lv7p")
 
 [node name="out2" type="Area3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -19.8045, 0, 0.0758781)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -40, 0, 0)
 collision_layer = 2
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="out2"]
-shape = SubResource("BoxShape3D_1lv7p")
+shape = SubResource("BoxShape3D_rkuri")
 
 [node name="out3" type="Area3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.195488, 0, 20.0759)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 40)
 collision_layer = 2
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="out3"]
-shape = SubResource("BoxShape3D_1lv7p")
+shape = SubResource("BoxShape3D_ab111")
 
 [node name="out4" type="Area3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20.1955, 0, 0.0758781)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 40, 0, 0)
 collision_layer = 2
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="out4"]
-shape = SubResource("BoxShape3D_1lv7p")
+shape = SubResource("BoxShape3D_b2giq")

@@ -120,6 +120,8 @@ func get_directions(from: DockStation, to: DockStation) -> Array[Direction]:
 			instruction.level = from.level
 			instruction.direction = cell_path[idx] - cell_path[idx-1] 
 			instruction.point_to_reach = convert_to_3d(point_to_reach, from.level)
+			instruction.intersection = cell_to_intersections[cell_path[idx]]
+			instruction.from = cell_path[idx-1]
 			directions.append(instruction)
 
 			var instruction_intersection = Direction.new()
@@ -159,7 +161,12 @@ func follow_directions(shell: ShellVehicle, directions: Array[Direction]):
 					direction.direction, direction.level)
 				shell.set_target_position(transform.origin)
 				shell.set_target_rotation(transform.basis.get_rotation_quaternion())
-				await shell.waypoint_reached
+				if direction.intersection:
+					var area_next = direction.intersection.get_area_to_reach(direction.from)
+					shell.set_area_to_reach(area_next)
+					await shell.area_reached
+				else:
+					await shell.waypoint_reached
 			DirectionType.MERGE:
 				var transform = get_target_transform_for_merge(direction.cell, 
 					direction.direction, direction.level)
