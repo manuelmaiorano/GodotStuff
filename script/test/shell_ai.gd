@@ -185,3 +185,6 @@ func follow_directions(shell: ShellVehicle, directions: Array[Direction]):
 				shell.set_target_rotation(final_transform.basis.get_rotation_quaternion())
 				shell.set_target_position(final_transform.origin)
 				await  shell.waypoint_reached
+	
+	shell.stop()
+		

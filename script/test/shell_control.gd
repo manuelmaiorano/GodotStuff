@@ -7,6 +7,8 @@ signal area_reached
 
 # Target position and rotation
 @export var target_position: Vector3 = Vector3.ZERO
+
+var target_direction: Vector3
 @export var target_height: float
 @export var target_rotation: Quaternion = Quaternion.IDENTITY
 @export var target_path: Path3D
@@ -15,7 +17,7 @@ signal area_reached
 @export var my_area: Area3D
 
 # Speed for movement and rotation
-@export var move_speed: float = 3.0
+@export var move_speed: float = 27.0
 @export var rotate_speed: float = 2.0
 
 enum MODE {WAIT, FOLLOW_TARGET, FOLLOW_PATH}
@@ -49,19 +51,20 @@ func _physics_process(delta: float) -> void:
 		MODE.WAIT:
 			return
 		MODE.FOLLOW_TARGET:
-			global_position = global_position.lerp(target_position, move_speed * delta)
+			global_position += target_direction * move_speed * delta
 
 			var current_rotation: Quaternion = global_transform.basis.get_rotation_quaternion()
 			var new_rotation: Quaternion = current_rotation.slerp(target_rotation, rotate_speed * delta)
 			global_transform.basis = Basis(new_rotation)
-			if target_position.distance_squared_to(global_position) < 0.01:
+			if target_position.distance_squared_to(global_position) < 0.1:
 				waypoint_reached.emit()
 			
 		MODE.FOLLOW_PATH:
 			var offset = get_offset_for_next_waypoint()
 			var transform_on_curve =  target_path.global_transform * target_path.curve.sample_baked_with_rotation(offset)
 
-			global_position = global_position.lerp(transform_on_curve.origin, move_speed * delta)
+			target_direction = (transform_on_curve.origin - global_position).normalized()
+			global_position += target_direction * move_speed * delta
 
 			var current_rotation: Quaternion = global_transform.basis.get_rotation_quaternion()
 			var new_rotation: Quaternion = current_rotation.slerp(transform_on_curve.basis.get_rotation_quaternion(),
@@ -71,13 +74,14 @@ func _physics_process(delta: float) -> void:
 func set_target_position(point: Vector3):
 	mode = MODE.FOLLOW_TARGET
 	target_position = point
-
+	target_direction = (target_position - global_position).normalized()
 
 func set_target_rotation(quat: Quaternion):
 	mode = MODE.FOLLOW_TARGET
 	target_rotation = quat
 
-
+func stop():
+	mode = MODE.WAIT
 func set_path(path: Path3D):
 	mode = MODE.FOLLOW_PATH
 	target_path = path

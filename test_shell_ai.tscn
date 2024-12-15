@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://bhk3rthmnkcna"]
+[gd_scene load_steps=9 format=3 uid="uid://bhk3rthmnkcna"]
 
 [ext_resource type="Script" path="res://script/test/shell_ai.gd" id="1_02ak5"]
 [ext_resource type="PackedScene" uid="uid://bt3a25ycb7qn6" path="res://test_shell.tscn" id="1_garp8"]
@@ -17,6 +17,8 @@ background_mode = 2
 sky = SubResource("Sky_aniw3")
 tonemap_mode = 2
 glow_enabled = true
+
+[sub_resource type="SphereMesh" id="SphereMesh_hk8n3"]
 
 [node name="test_shell_ai" type="Node3D"]
 script = ExtResource("1_02ak5")
@@ -48,10 +50,14 @@ transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 411.61
 [node name="dock_position" parent="dock_station2" index="1"]
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 7.82258, 0, 0)
 
+[node name="MeshInstance3D" type="MeshInstance3D" parent="dock_station2/dock_position" index="0"]
+mesh = SubResource("SphereMesh_hk8n3")
+
 [node name="Camera3D" type="Camera3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 100, 108.401)
 visible = false
 projection = 1
+current = true
 size = 500.0
 
 [node name="intersection" parent="." instance=ExtResource("4_yxyn4")]
