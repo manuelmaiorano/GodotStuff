@@ -1,0 +1,62 @@
+[gd_scene load_steps=8 format=3 uid="uid://bhk3rthmnkcna"]
+
+[ext_resource type="Script" path="res://script/test/shell_ai.gd" id="1_02ak5"]
+[ext_resource type="PackedScene" uid="uid://bt3a25ycb7qn6" path="res://test_shell.tscn" id="1_garp8"]
+[ext_resource type="PackedScene" uid="uid://clpb068cqoskx" path="res://dock_station.tscn" id="3_bk1wv"]
+[ext_resource type="PackedScene" uid="uid://cyh5novheij4m" path="res://intersection.tscn" id="4_yxyn4"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_rrcti"]
+sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
+ground_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
+
+[sub_resource type="Sky" id="Sky_aniw3"]
+sky_material = SubResource("ProceduralSkyMaterial_rrcti")
+
+[sub_resource type="Environment" id="Environment_r03xo"]
+background_mode = 2
+sky = SubResource("Sky_aniw3")
+tonemap_mode = 2
+glow_enabled = true
+
+[node name="test_shell_ai" type="Node3D"]
+script = ExtResource("1_02ak5")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.866023, -0.433016, 0.250001, 0, 0.499998, 0.866027, -0.500003, 0.749999, -0.43301, 0, 0, 0)
+visible = false
+shadow_enabled = true
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_r03xo")
+
+[node name="shell" parent="." instance=ExtResource("1_garp8")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -97.3227, 0, -67.3509)
+
+[node name="Camera3D" type="Camera3D" parent="shell"]
+transform = Transform3D(-1, 6.22109e-08, -6.14211e-08, 4.02021e-08, 0.951121, 0.308818, 7.76307e-08, 0.308818, -0.951121, 0, 16, -10.6839)
+current = true
+
+[node name="road_grid_map" type="GridMap" parent="."]
+cell_size = Vector3(120, 2, 120)
+
+[node name="dock_station" parent="." instance=ExtResource("3_bk1wv")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -112.454, 0, -76.4627)
+
+[node name="dock_station2" parent="." instance=ExtResource("3_bk1wv")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 411.61, 0, 138.798)
+
+[node name="dock_position" parent="dock_station2" index="1"]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 7.82258, 0, 0)
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 100, 108.401)
+visible = false
+projection = 1
+current = true
+size = 500.0
+
+[node name="intersection" parent="." instance=ExtResource("4_yxyn4")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -60, 0, 180)
+
+[editable path="dock_station"]
+[editable path="dock_station2"]

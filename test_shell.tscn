@@ -1,0 +1,24 @@
+[gd_scene load_steps=4 format=3 uid="uid://bt3a25ycb7qn6"]
+
+[ext_resource type="Script" path="res://script/test/shell_control.gd" id="1_inwmb"]
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_6oekr"]
+radius = 2.0
+height = 8.0
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_j3j3r"]
+size = Vector3(10, 5, 10)
+
+[node name="shell" type="Node3D" node_paths=PackedStringArray("my_area")]
+script = ExtResource("1_inwmb")
+my_area = NodePath("Area3D")
+
+[node name="CSGMesh3D" type="CSGMesh3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0)
+mesh = SubResource("CapsuleMesh_6oekr")
+
+[node name="Area3D" type="Area3D" parent="."]
+collision_mask = 3
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
+shape = SubResource("BoxShape3D_j3j3r")

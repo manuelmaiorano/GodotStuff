@@ -1,0 +1,15 @@
+[gd_scene load_steps=3 format=3 uid="uid://clpb068cqoskx"]
+
+[ext_resource type="Script" path="res://script/test/dock_station.gd" id="1_86x4b"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_hjdmw"]
+size = Vector3(10, 20, 20)
+
+[node name="dock_station" type="Node3D"]
+script = ExtResource("1_86x4b")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("BoxMesh_hjdmw")
+
+[node name="dock_position" type="Marker3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.82258, 0, 0)
