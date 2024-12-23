@@ -96,7 +96,6 @@ func get_target_transform_for_merge(cell: Vector2i, direction: Vector2, level: i
 
 
 func search_path(from: Vector2i, to: Vector2i) -> Array[Vector2i]:
-	var path: Array[Vector2i] = []
 	return astar_grid.get_id_path(from, to)
 	
 	
